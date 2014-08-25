@@ -2,6 +2,8 @@
 
 Servo cutter;
 
+int debug=1;
+
 //int pwm_a = 10; //PWM control for motor outputs 1 and 2 is on digital pin 10
 int pwm_a = 3;  //PWM control for motor outputs 1 and 2 is on digital pin 3
 int pwm_b = 11;  //PWM control for motor outputs 3 and 4 is on digital pin 11
@@ -90,29 +92,27 @@ void startCutter() {
 
 
 int getCutterState(){
-  int retVal = 99;
-  switch(cutter_state) {
-    CUTTER_ON:
-      retVal = CUTTER_ON;
-      break;
-    CUTTER_OFF:
-      retVal = CUTTER_OFF;
-      break;
-  }  
-  return retVal;
+  return cutter_state;
 }
 
 void toggleCutter(){
   Serial.println(getCutterState());
-  switch(getCutterState()){
-    CUTTER_ON:
-      stopCutter();
-      break;
-    CUTTER_OFF:
-      startCutter();
-      break;
-  }
+
+  int retVal = cutter_state ^ 0x01;
+  Serial.print("  - cutter_state: ");
+  Serial.println(cutter_state);
+
+  cutter_state = retVal;
+
+  Serial.print("  - cutter_state: ");
+  Serial.println(cutter_state);
+  
 }
+
+void toggleDebug(){
+  debug = debug ^ 0x01; 
+}
+
 //=============================================
 //=============================================
 // Motor driver routines
@@ -252,6 +252,25 @@ void stopIfFault(int es)
 //=============================================
 //=============================================
 
+void printState(){
+
+  switch(state){
+    case MOWING: Serial.print("MOWING") ; break ;
+    case LAUNCHING: Serial.print("LAUNCHING") ; break ;
+    case TRACKING: Serial.print("TRACKING") ; break ;
+    case DOCKING: Serial.print("DOCKING") ; break ;
+    case CHARGING: Serial.print("CHARGING") ; break ;
+    case DEBUG: Serial.print("DEBUG") ; break ;
+    case CONFIGURE: Serial.print("CONFIGURE") ; break ;
+    case STARTUP: Serial.print("STARTUP") ; break ;
+    case IDLE: Serial.print("IDLE") ; break ;
+    case STOP: Serial.print("STOP") ; break ;
+    case LEFT: Serial.print("LEFT") ; break ;
+    case RIGHT: Serial.print("RIGHT") ; break ;    
+  }  
+}
+
+
 void printStatus()
 {
   Serial.print ("Counter: ");
@@ -266,7 +285,11 @@ void printStatus()
   Serial.print (getRightMotorSpeed());
   Serial.print (" Cutter state: ");
   Serial.print (getCutterState());
-  
+
+  Serial.print(" State: "); printState();  
+  Serial.print(" Debug: ");
+  Serial.print(debug);
+
   Serial.println();  
 }
 
@@ -303,7 +326,7 @@ void printDebug(){
       Serial.print(" AnglYZ: ");
       Serial.print(getYZang());
   */
-  
+    
       Serial.println();
  
 }
@@ -422,7 +445,7 @@ void loop()
     case MOWING:
 
       // Hit something
-      if (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad) {
+      if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
         stopCutter();
         Serial.println("* Motor current threshold reached");
         backUpWithTwist(1500);
@@ -486,6 +509,7 @@ void loop()
      if (inputChar == 'l' && state == MOWING ) { Serial.println("  - Turning left"); state = LEFT; inputChar=0;}
      if (inputChar == 'r' && state == MOWING ) { Serial.println("  - Turning right"); state = RIGHT; inputChar=0;}
      if (inputChar == 'c' && state == MOWING ) { Serial.println("  - Toggle cutter"); toggleCutter(); state = MOWING; inputChar=0;}
+     if (inputChar == 'd' ) { Serial.println("  - Toggling debug flag"); toggleDebug(); inputChar=0; inputChar = 0; }
      
 
   }
