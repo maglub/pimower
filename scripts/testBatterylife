@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sleepTime=3
+
+while true
+do
+  wget -O - http://smalometern.com/noWebPage
+  sleep $sleepTime
+done
