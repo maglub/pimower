@@ -1,18 +1,21 @@
-#include <Servo.h>
+#define __brushlessCutter__ // Brushed or brushless cutter motor
+//#define __accelerometer__ // Accelerometer available
+//#define __LCD__           // LCD Available
+//#define __FWD__           // Front Wheel Drive
+//#define __CutterCurrentSensing__  // Adjust speed through current sensing or voltage drop
 
-Servo cutter;
+#ifdef __brushlessCutter__
+  #include <Servo.h>
+  Servo cutter;
+#endif
 
-int debug     = 1;
+int debug     = 0;
 int verbosity = 1;
 
-//int pwm_a = 10; //PWM control for motor outputs 1 and 2 is on digital pin 10
-int pwm_a = 3;  //PWM control for motor outputs 1 and 2 is on digital pin 3
-int pwm_b = 11;  //PWM control for motor outputs 3 and 4 is on digital pin 11
-int dir_a = 12;  //dir control for motor outputs 1 and 2 is on digital pin 12
-int dir_b = 13;  //dir control for motor outputs 3 and 4 is on digital pin 13
 
-const int motorLeft = 0;                     //  Current in motor
-const int motorRight = 1;                    //  Current in motor
+const int motorLeft = A0;                     //  Current in motor
+const int motorRight = A1;                    //  Current in motor
+const int batterySOCPin = A2;       //  Analog reading of SOC (Battery Voltage)
 
 const int cutterMotorOutPin = 6;
 
@@ -120,6 +123,10 @@ void toggleDebug(){
 // Motor driver routines
 //=============================================
 //=============================================
+
+int getBatterySOC() {
+  return analogRead(batterySOCPin);
+}
 
 unsigned int getLeftMotorCurrent() {
   return analogRead(motorLeft);
@@ -329,6 +336,8 @@ void printStatus()
     Serial.print (getRightMotorSpeed());
     Serial.print (" Cutter state: ");
     Serial.print (getCutterState());
+    Serial.print ("Battery: ");
+    Serial.print (getBatterySOC());
   
     Serial.print(" State: "); printState();  
     Serial.print(" Debug: ");
@@ -425,14 +434,6 @@ void setup()
   pinMode(motorLeftPWM, OUTPUT);
   pinMode(motorRightPWM, OUTPUT);
 
-/*
-  pinMode(pwm_a, OUTPUT);  //Set control pins to be outputs
-  pinMode(pwm_b, OUTPUT);
-  pinMode(dir_a, OUTPUT);
-  pinMode(dir_b, OUTPUT);
-  
-*/
-
   //Initialize cutter motor
 
   cutter.attach(cutterMotorOutPin);
@@ -469,9 +470,9 @@ void setup()
 
 
   //Initialize wheels
-  analogWrite(motorLeftPWM, 150);        
+  analogWrite(motorLeftPWM, 200);        
   //set both motors to run at (100/255 = 39)% duty cycle (slow)  
-  analogWrite(motorRightPWM, 150);
+  analogWrite(motorRightPWM, 200);
 
   digitalWrite(motorLeftDirection, LOW);  //Set motor direction, 1 low, 2 high
   digitalWrite(motorRightDirection, LOW);  //Set motor direction, 3 high, 4 low
