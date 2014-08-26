@@ -543,7 +543,7 @@ void loop()
      if (inputChar == 'l' && state == MOWING ) { Serial.println("  - Turning left"); state = LEFT; inputChar=0;}
      if (inputChar == 'r' && state == MOWING ) { Serial.println("  - Turning right"); state = RIGHT; inputChar=0;}
      if (inputChar == 'c' && state == MOWING ) { Serial.println("  - Toggle cutter"); toggleCutter(); state = MOWING; inputChar=0;}
-     if (inputChar == 'd' ) { Serial.println("  - Toggling debug flag"); toggleDebug(); inputChar=0; inputChar = 0; }
+     if (inputChar == 'D' ) { Serial.println("  - Toggling debug flag"); toggleDebug(); inputChar=0; inputChar = 0; }
      
 
   }
