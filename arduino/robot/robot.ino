@@ -336,7 +336,7 @@ void printStatus()
     Serial.print (getRightMotorSpeed());
     Serial.print (" Cutter state: ");
     Serial.print (getCutterState());
-    Serial.print ("Battery: ");
+    Serial.print (" Battery: ");
     Serial.print (getBatterySOC());
   
     Serial.print(" State: "); printState();  
