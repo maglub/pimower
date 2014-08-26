@@ -519,7 +519,7 @@ void loop()
       int oldLeft;
       oldLeft = getLeftMotorSpeed();
       setLeftMotorSpeed(0);
-      delay(500);
+      delay(1000);
       setLeftMotorSpeed(oldLeft);
       state = MOWING;
       break;
@@ -528,7 +528,7 @@ void loop()
       int oldRight;
       oldRight = getRightMotorSpeed();
       setRightMotorSpeed(0);
-      delay(500);
+      delay(1000);
       setRightMotorSpeed(oldRight);
       state = MOWING;
       break;
