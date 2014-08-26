@@ -2,7 +2,8 @@
 
 Servo cutter;
 
-int debug=1;
+int debug     = 1;
+int verbosity = 1;
 
 //int pwm_a = 10; //PWM control for motor outputs 1 and 2 is on digital pin 10
 int pwm_a = 3;  //PWM control for motor outputs 1 and 2 is on digital pin 3
@@ -306,24 +307,28 @@ void printState(){
 
 void printStatus()
 {
-  Serial.print ("Counter: ");
-  Serial.print (counter);
-  Serial.print (" LC: ");
-  Serial.print (getLeftMotorCurrent());
-  Serial.print (" RC: ");
-  Serial.print (getRightMotorCurrent());
-  Serial.print (" LeftMotorSpeed: ");
-  Serial.print (getLeftMotorSpeed());
-  Serial.print (" RightMotorSpeed: ");
-  Serial.print (getRightMotorSpeed());
-  Serial.print (" Cutter state: ");
-  Serial.print (getCutterState());
+  
+  if ( verbosity == 1 ) {
+    Serial.print ("Counter: ");
+    Serial.print (counter);
+    Serial.print (" LC: ");
+    Serial.print (getLeftMotorCurrent());
+    Serial.print (" RC: ");
+    Serial.print (getRightMotorCurrent());
+    Serial.print (" LeftMotorSpeed: ");
+    Serial.print (getLeftMotorSpeed());
+    Serial.print (" RightMotorSpeed: ");
+    Serial.print (getRightMotorSpeed());
+    Serial.print (" Cutter state: ");
+    Serial.print (getCutterState());
+  
+    Serial.print(" State: "); printState();  
+    Serial.print(" Debug: ");
+    Serial.print(debug);
+  
+    Serial.println();  
+  }
 
-  Serial.print(" State: "); printState();  
-  Serial.print(" Debug: ");
-  Serial.print(debug);
-
-  Serial.println();  
 }
 
 void printDebug(){
@@ -544,6 +549,7 @@ void loop()
      if (inputChar == 'r' && state == MOWING ) { Serial.println("  - Turning right"); state = RIGHT; inputChar=0;}
      if (inputChar == 'c' && state == MOWING ) { Serial.println("  - Toggle cutter"); toggleCutter(); state = MOWING; inputChar=0;}
      if (inputChar == 'D' ) { Serial.println("  - Toggling debug flag"); toggleDebug(); inputChar=0; inputChar = 0; }
+     if (inputChar == 'p' ) { Serial.println("  - Toggling print status output"); verbosity = verbosity ^ 0x01; }
      
 
   }
