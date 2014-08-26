@@ -157,8 +157,6 @@ void setRightMotorSpeed(int val){
   setRightMotorDirection(val>0);
 }
 
-
-
 void stopMower(){
       setLeftMotorSpeed(0);
       setRightMotorSpeed(0);  
@@ -182,8 +180,29 @@ void slowStart(){
 }
 
 void reverseDirection(){
-  setLeftMotorSpeed(- getLeftMotorSpeed());
-  setRightMotorSpeed(- getRightMotorSpeed());  
+  
+  int ls = getLeftMotorSpeed();
+  int rs = getLeftMotorSpeed();
+  int cur_fullSpeed;
+  
+  int leftDirection = ls > 0 ? 1 : -1;
+  int rightDirection = rs > 0 ? 1: -1;
+
+  if (ls > rs ) {
+    cur_fullSpeed = abs(ls);
+  } else {
+    cur_fullSpeed = abs(rs);
+  }
+  
+  for (int i = 0; i<fullSpeed; i+=5) {
+    setLeftMotorSpeed(i * leftDirection);
+    setRightMotorSpeed(i * rightDirection);
+    delay(15);
+  }
+
+      setLeftMotorSpeed(cur_fullSpeed);
+      setRightMotorSpeed(cur_fullSpeed);
+    
 }
 
 //=============================================
