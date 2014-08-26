@@ -336,6 +336,21 @@ void printStatus()
     Serial.print (getRightMotorSpeed());
     Serial.print (" Cutter state: ");
     Serial.print (getCutterState());
+
+   #--- R = R1 + R2 = 330k + 100k = 430k
+   #--- U = R * I
+   #--- U1 = 330k * I
+   #--- U2 = 100k * I
+   #--- Vin = U1 + U2
+   #--- Vin = 330k * I + U2
+   #--- I = Vin / (330k + 100k)
+   #--- Vin = 330k * Vin / (430k) + U2
+   #--- U2 = 100/430 * Vin
+   #--- Vin = 430/100 * U2
+   #--- Analogue A2 -> Voltage (U2) = 5/1024 * A2
+   #--- Vin = 4.3 * U2
+   #--- Vin = 4.3 * 5 / 1024 * A2 = 21.5 * getBatterySOC() / 1024
+   
     Serial.print (" Battery: ");
     Serial.print (21.5 * getBatterySOC() / 1024, 2);
   
