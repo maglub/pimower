@@ -56,6 +56,7 @@ const int IDLE = 8;
 const int STOP = 9;
 const int LEFT = 10;
 const int RIGHT = 11;
+const int BUMP = 12;
 
 int leftMotorSpeed = 0;
 int rightMotorSpeed = 0;
@@ -491,14 +492,19 @@ void loop()
 
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
+        state = BUMP;
+      }   
+      break; // end state MOWING
+  
+    case BUMP:
         stopCutter();
         Serial.println("* Motor current threshold reached");
         backUpWithTwist(1500);
         slowStart();
         //startCutter();
-      }   
-      break; // end state MOWING
-  
+        state = MOWING;
+        break;
+        
     case STARTUP:
       StartUp();
       state = IDLE;  
@@ -548,7 +554,7 @@ void loop()
      Serial.println("Caught serial"); // anything from serial line
      Serial.print("  - Received: ");
      Serial.println(inputChar);
-
+    
      if (inputChar == 's' && state != MOWING ) { Serial.println("  - Starting robot"); state = MOWING; slowStart(); inputChar=0 ;}
      if (inputChar == 'd' && state == MOWING ) { Serial.println("  - Reversing robot") ; reverseDirection(); inputChar=0 ;}     
      if (inputChar == 's' && state == MOWING ) { Serial.println("  - Stopping robot"); state = STOP; inputChar=0;}
@@ -557,8 +563,7 @@ void loop()
      if (inputChar == 'c' && state == MOWING ) { Serial.println("  - Toggle cutter"); toggleCutter(); state = MOWING; inputChar=0;}
      if (inputChar == 'D' ) { Serial.println("  - Toggling debug flag"); toggleDebug(); inputChar=0; inputChar = 0; }
      if (inputChar == 'p' ) { Serial.println("  - Toggling print status output"); verbosity = verbosity ^ 0x01; }
-     
-
+     if (inputChar == 'b' && state == MOWING ) { Serial.println("  - Bump"); state = BUMP; inputChar=0;}
   }
 
   printStatus();
