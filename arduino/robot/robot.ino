@@ -188,13 +188,13 @@ void reverseDirection(){
   int rs = getLeftMotorSpeed();
   int cur_fullSpeed;
   
-  int leftDirection = ls > 0 ? 1 : -1;
-  int rightDirection = rs > 0 ? 1: -1;
+  int new_leftDirection = ls > 0 ? -1 : 1;
+  int new_rightDirection = rs > 0 ? -1: 1;
 
-  Serial.print("  - leftDirection: ");
-  Serial.print(leftDirection);
-  Serial.print(" rightDirection: ");
-  Serial.print(rightDirection);
+  Serial.print("  - new_leftDirection: ");
+  Serial.print(new_leftDirection);
+  Serial.print(" new_rightDirection: ");
+  Serial.print(new_rightDirection);
   Serial.print(" leftMotorSpeed: ");
   Serial.print(ls);
   Serial.print(" rightMotorSpeed: ");
@@ -208,8 +208,15 @@ void reverseDirection(){
   }
   
   for (int i = 0; i<fullSpeed; i+=5) {
-    setLeftMotorSpeed(i * leftDirection);
-    setRightMotorSpeed(i * rightDirection);
+    setLeftMotorSpeed(  i * new_leftDirection  );
+    setRightMotorSpeed( i * new_rightDirection );
+
+    Serial.print("  - leftMotorSpeed: ");
+    Serial.print(ls);
+    Serial.print(" rightMotorSpeed: ");
+    Serial.print(rs);
+    Serial.println();
+
     delay(15);
   }
 
