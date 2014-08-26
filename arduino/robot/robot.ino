@@ -180,6 +180,8 @@ void slowStart(){
 }
 
 void reverseDirection(){
+
+  Serial.println("* reverseDirection()");
   
   int ls = getLeftMotorSpeed();
   int rs = getLeftMotorSpeed();
@@ -187,6 +189,16 @@ void reverseDirection(){
   
   int leftDirection = ls > 0 ? 1 : -1;
   int rightDirection = rs > 0 ? 1: -1;
+
+  Serial.print("  - leftDirection: ");
+  Serial.print(leftDirection);
+  Serial.print(" rightDirection: ");
+  Serial.print(rightDirection);
+  Serial.print(" leftMotorSpeed: ");
+  Serial.print(ls);
+  Serial.print(" rightMotorSpeed: ");
+  Serial.print(rs);
+  Serial.println();
 
   if (ls > rs ) {
     cur_fullSpeed = abs(ls);
