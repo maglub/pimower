@@ -34,7 +34,7 @@ const int enableShield = shieldPin[shieldType][4];                  //  -1      
 
 // Maximum allowed wheel motor current        Ardumoto  Pololu
 const int maxWheelLoad = 40;                // 40     85
-const int triggerWheelLoad = 15;            // 30     75
+const int triggerWheelLoad = 6;            // 30     75
 
 
 // Cutter states
