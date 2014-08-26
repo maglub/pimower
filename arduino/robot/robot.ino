@@ -337,7 +337,7 @@ void printStatus()
     Serial.print (" Cutter state: ");
     Serial.print (getCutterState());
     Serial.print (" Battery: ");
-    Serial.print (getBatterySOC());
+    Serial.print (21.5 * getBatterySOC() / 1024, 2);
   
     Serial.print(" State: "); printState();  
     Serial.print(" Debug: ");
