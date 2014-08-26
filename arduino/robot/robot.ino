@@ -212,16 +212,16 @@ void reverseDirection(){
     setRightMotorSpeed( i * new_rightDirection );
 
     Serial.print("  - leftMotorSpeed: ");
-    Serial.print(ls);
+    Serial.print(i * new_leftDirection);
     Serial.print(" rightMotorSpeed: ");
-    Serial.print(rs);
+    Serial.print(i * new_rightDirection);
     Serial.println();
 
     delay(15);
   }
 
-      setLeftMotorSpeed(cur_fullSpeed);
-      setRightMotorSpeed(cur_fullSpeed);
+      setLeftMotorSpeed(cur_fullSpeed * new_leftDirection );
+      setRightMotorSpeed(cur_fullSpeed * new_rightDirection);
     
 }
 
