@@ -179,10 +179,12 @@ void slowStart(){
       }
       setLeftMotorSpeed(fullSpeed);
       setRightMotorSpeed(fullSpeed);
-
- 
 }
 
+void reverseDirection(){
+  setLeftMotorSpeed(- getLeftMotorSpeed);
+  setRightMotorSpeed(- getRightMotorSpeed);  
+}
 
 //=============================================
 // backUp()
@@ -505,6 +507,7 @@ void loop()
      Serial.println(inputChar);
 
      if (inputChar == 's' && state != MOWING ) { Serial.println("  - Starting robot"); state = MOWING; slowStart(); inputChar=0 ;}
+     if (inputChar == 'd' && state == MOWING ) { Serial.println("  - Reversing robot") ; reverseDirection(); inputChar=0 ;}     
      if (inputChar == 's' && state == MOWING ) { Serial.println("  - Stopping robot"); state = STOP; inputChar=0;}
      if (inputChar == 'l' && state == MOWING ) { Serial.println("  - Turning left"); state = LEFT; inputChar=0;}
      if (inputChar == 'r' && state == MOWING ) { Serial.println("  - Turning right"); state = RIGHT; inputChar=0;}
