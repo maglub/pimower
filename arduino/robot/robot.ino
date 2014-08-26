@@ -468,9 +468,9 @@ void setup()
 
 
   //Initialize wheels
-  analogWrite(motorLeftPWM, 100);        
+  analogWrite(motorLeftPWM, 150);        
   //set both motors to run at (100/255 = 39)% duty cycle (slow)  
-  analogWrite(motorRightPWM, 100);
+  analogWrite(motorRightPWM, 150);
 
   digitalWrite(motorLeftDirection, LOW);  //Set motor direction, 1 low, 2 high
   digitalWrite(motorRightDirection, LOW);  //Set motor direction, 3 high, 4 low
