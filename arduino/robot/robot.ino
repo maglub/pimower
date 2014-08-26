@@ -182,8 +182,8 @@ void slowStart(){
 }
 
 void reverseDirection(){
-  setLeftMotorSpeed(- getLeftMotorSpeed);
-  setRightMotorSpeed(- getRightMotorSpeed);  
+  setLeftMotorSpeed(- getLeftMotorSpeed());
+  setRightMotorSpeed(- getRightMotorSpeed());  
 }
 
 //=============================================
