@@ -546,6 +546,7 @@ void loop()
       delay(1000);
       setLeftMotorSpeed(oldLeft);
       state = MOWING;
+      sleep(100);
       break;
       
     case RIGHT:
@@ -555,6 +556,7 @@ void loop()
       delay(1000);
       setRightMotorSpeed(oldRight);
       state = MOWING;
+      sleep(100);
       break;
       
     case STOP:
