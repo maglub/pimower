@@ -262,17 +262,19 @@ void backUpWithTwist(int backUpTime){
   Serial.print(" seconds.");
   setLeftMotorSpeed(0);
   setRightMotorSpeed(0);
-  delay(200);
+//  delay(200);
+//  delay(200);
   
   setLeftMotorSpeed(-fullSpeed);
-  setRightMotorSpeed(-slowSpeed);
+//  setRightMotorSpeed(-slowSpeed);
+  setRightMotorSpeed(-fullSpeed);
   delay(backUpTime / 2);
   setRightMotorSpeed(fullSpeed);
   delay(backUpTime / 2);
   setLeftMotorSpeed(0);
   setRightMotorSpeed(0);
   Serial.println("  - Done backing up");
-  delay(200);
+  delay(100);
 }
 
 //===============================================
