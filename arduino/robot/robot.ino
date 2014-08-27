@@ -368,6 +368,13 @@ void printStatus()
     Serial.print(" Debug: ");
     Serial.print(debug);
   
+    Serial.print(" Charge: ");
+    if(batterySOC > batterySOCChargingLevel) {
+      Serial.print("OK");
+    } else {
+      Serial.print("NOK!");
+    }      
+  
     Serial.println();  
   }
 
