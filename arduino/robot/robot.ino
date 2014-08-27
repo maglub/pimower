@@ -73,6 +73,11 @@ int cutterSpeed = 150;
 int state;
 int counter = 0;
 
+// Battery                                  
+const float batterySOCChargingLevel = 550;   // Battery Voltage when it is time to charge
+const float batterySOCFullyChargedLevel = 590;  // Voltage when the battery is fully charged
+const int batterySOCTriggerAmount = 5;       // Number of checks below trigger level before returning to charge
+int batterySOC;
 
 //=============================================
 // stopCutter()
@@ -354,7 +359,10 @@ void printStatus()
    //#--- Vin = 4.3 * 5 / 1024 * A2 = 21.5 * getBatterySOC() / 1024
    
     Serial.print (" Battery: ");
-    Serial.print (21.5 * getBatterySOC() / 1024, 2);
+    Serial.print (batterySOC);
+    Serial.print (" (");
+    Serial.print (21.5 * batterySOC / 1024, 2);
+    Serial.print ("V)");
   
     Serial.print(" State: "); printState();  
     Serial.print(" Debug: ");
@@ -504,7 +512,9 @@ void setup()
 
 void loop()
 {
-  
+  // done every loop
+  batterySOC = getBatterySOC();
+
   switch (state) {
     case MOWING:
 
