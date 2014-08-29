@@ -45,9 +45,9 @@ const int motorLeftPWM = shieldPin[shieldType][2];                  //  11      
 const int motorRightPWM = shieldPin[shieldType][3];                //  3        10
 const int enableShield = shieldPin[shieldType][4];                  //  -1        4
 
-const int rcCH1 = 5; // left/right, full left ca 940, 0 ca 1490 - 1498, full right ca 2000
+const int rcCH1 = 7; // left/right, full left ca 940, 0 ca 1490 - 1498, full right ca 2000
 const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, full reverse 1159
-const int rcCH3 = 7; // AUX ON/OFF => ca <1000, ca >1990
+//const int rcCH3 = 7; // AUX ON/OFF => ca <1000, ca >1990
 
 const int rc_radio[3][4] = { // pin, min, zero, max
                   {rcCH1,  1250, 1960, 2610},
@@ -517,7 +517,7 @@ void setup()
 #ifdef __rc_radio_
   pinMode(rcCH1, INPUT); // Set our input pins as such
   pinMode(rcCH2, INPUT);
-  pinMode(rcCH3, INPUT);
+//  pinMode(rcCH3, INPUT);
 #endif
 
   //Initialize cutter motor
