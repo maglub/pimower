@@ -102,7 +102,7 @@ int batterySOC;
 // RC functions
 //=============================================
 int rcRead(int channel){
-  return pulseIn(rc_radio[channel-1][0], HIGH, 25000);
+  return pulseIn(rc_radio[channel-1][0], HIGH, 25000) / 10;
 }
 
 int getRcOffset(int this_channel){
