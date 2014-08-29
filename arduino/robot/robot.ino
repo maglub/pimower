@@ -105,10 +105,10 @@ int rcRead(int channel){
   return pulseIn(rc_radio[channel-1][0], HIGH, 25000);
 }
 
-int getRcOffset(int channel){
-  int cur_read = rcRead(channel);
+int getRcOffset(int this_channel){
+  int cur_read = rcRead(this_channel);
   return cur_read;
-  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
+//  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
 }
 
 //=============================================
