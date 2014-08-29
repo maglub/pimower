@@ -1,4 +1,5 @@
 #define __brushlessCutter__ // Brushed or brushless cutter motor
+#define __rc_radio_         // RC radio
 //#define __accelerometer__ // Accelerometer available
 //#define __LCD__           // LCD Available
 //#define __FWD__           // Front Wheel Drive
@@ -7,6 +8,12 @@
 #ifdef __brushlessCutter__
   #include <Servo.h>
   Servo cutter;
+#endif
+
+int RC_RADIO=0;
+
+#ifdef __rc_radio__
+  RC_RADIO = 1;
 #endif
 
 int debug     = 0;
@@ -36,6 +43,16 @@ const int motorLeftPWM = shieldPin[shieldType][2];                  //  11      
 const int motorRightPWM = shieldPin[shieldType][3];                //  3        10
 const int enableShield = shieldPin[shieldType][4];                  //  -1        4
 
+const int rcCH1 = 5; // left/right, full left ca 940, 0 ca 1490 - 1498, full right ca 2000
+const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, full reverse 1159
+const int rcCH3 = 7; // AUX ON/OFF => ca <1000, ca >1990
+
+const int rc_radio[3][4] = { // pin, min, zero, max
+                  {rcCH1,  940, 1495, 2000},
+                  {rcCH2, 1160, 1500, 2040},
+                  {rcCH3,    0, 1000, 1990}
+                 };
+                 
 // Maximum allowed wheel motor current        Ardumoto  Pololu
 const int maxWheelLoad = 40;                // 40     85
 const int triggerWheelLoad = 6;            // 30     75
@@ -78,6 +95,18 @@ const float batterySOCChargingLevel = 550;   // Battery Voltage when it is time 
 const float batterySOCFullyChargedLevel = 590;  // Voltage when the battery is fully charged
 const int batterySOCTriggerAmount = 5;       // Number of checks below trigger level before returning to charge
 int batterySOC;
+
+//=============================================
+// RC functions
+//=============================================
+int rcRead(int channel){
+  return pulseIn(rc_radio[channel-1][0], HIGH, 25000);
+}
+
+int getRcOffset(int channel){
+  int cur_read = rcRead(channel);
+  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
+}
 
 //=============================================
 // stopCutter()
@@ -331,17 +360,17 @@ void printStatus()
 {
   
   if ( verbosity == 1 ) {
-    Serial.print ("Counter: ");
+    Serial.print ("#: ");
     Serial.print (counter);
     Serial.print (" LC: ");
     Serial.print (getLeftMotorCurrent());
     Serial.print (" RC: ");
     Serial.print (getRightMotorCurrent());
-    Serial.print (" LeftMotorSpeed: ");
+    Serial.print (" LMotorSp: ");
     Serial.print (getLeftMotorSpeed());
-    Serial.print (" RightMotorSpeed: ");
+    Serial.print (" RMotorSp: ");
     Serial.print (getRightMotorSpeed());
-    Serial.print (" Cutter state: ");
+    Serial.print (" Cutter: ");
     Serial.print (getCutterState());
 
    //#--- R = R1 + R2 = 330k + 100k = 430k
@@ -373,8 +402,17 @@ void printStatus()
       Serial.print("OK");
     } else {
       Serial.print("NOK!");
-    }      
+    }
+
+#ifdef __rc_radio__
+    Serial.print(" RC1: ");
+    Serial.print(getRcOffset(1));
+    Serial.print(" RC2: ");
+    Serial.print(getRcOffset(2));
+    Serial.print(" RC3: ");
+    Serial.print(getRcOffset(3));
   
+#endif 
     Serial.println();  
   }
 
@@ -465,6 +503,12 @@ void setup()
   pinMode(motorRightDirection, OUTPUT);
   pinMode(motorLeftPWM, OUTPUT);
   pinMode(motorRightPWM, OUTPUT);
+
+#ifdef __rc_radio_
+  pinMode(rcCH1, INPUT); // Set our input pins as such
+  pinMode(rcCH2, INPUT);
+  pinMode(rcCH3, INPUT);
+#endif
 
   //Initialize cutter motor
 
