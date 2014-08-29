@@ -50,7 +50,7 @@ const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, f
 const int rcCH3 = 7; // AUX ON/OFF => ca <1000, ca >1990
 
 const int rc_radio[3][4] = { // pin, min, zero, max
-                  {rcCH1,  940, 1495, 2000},
+                  {rcCH1,  1250, 1960, 2610},
                   {rcCH2, 1160, 1500, 2040},
                   {rcCH3,    0, 1000, 1990}
                  };
@@ -107,6 +107,7 @@ int rcRead(int channel){
 
 int getRcOffset(int channel){
   int cur_read = rcRead(channel);
+  return cur_read;
   return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
 }
 
