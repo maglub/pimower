@@ -1,5 +1,5 @@
 #define __brushlessCutter__ // Brushed or brushless cutter motor
-#define __rc_radio_         // RC radio
+#define __rc_radio__         // RC radio
 //#define __accelerometer__ // Accelerometer available
 //#define __LCD__           // LCD Available
 //#define __FWD__           // Front Wheel Drive
@@ -10,11 +10,13 @@
   Servo cutter;
 #endif
 
-int RC_RADIO=0;
+int RC_RADIO=1;
 
+/*
 #ifdef __rc_radio__
-  RC_RADIO = 1;
+  int RC_RADIO = 1;
 #endif
+*/
 
 int debug     = 0;
 int verbosity = 1;
