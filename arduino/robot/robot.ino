@@ -413,6 +413,13 @@ void printStatus()
     Serial.print(getRcOffset(2));
     Serial.print(" RC3: ");
     Serial.print(getRcOffset(3));
+
+    Serial.print(" RC1: ");
+    Serial.print(rcRead(1));
+    Serial.print(" RC2: ");
+    Serial.print(rcRead(2));
+    Serial.print(" RC3: ");
+    Serial.print(rcRead(3));
   
 #endif 
     Serial.println();  
