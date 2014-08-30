@@ -109,8 +109,7 @@ int rcRead(int channel){
 }
 
 int getRcOffset(int channel){
-  return 0;
-  return (rcCH_val[channel-1], rc_radio[channel-1][1], rc_radio[channel-1][3], -255, 255);
+  return map(rcCH_val[channel-1], rc_radio[channel-1][1], rc_radio[channel-1][3], -255, 255);
   //return rcCH_val[channel -1] - rc_radio[channel-1][2];
 //  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
 }
