@@ -55,6 +55,10 @@ const int rc_radio[3][4] = { // pin, min, zero, max
                   {rcCH3,    0, 1000, 1990}
                  };
                  
+int rcCH1_val;
+int rcCH2_val;
+int rcHC3_val;
+
 // Maximum allowed wheel motor current        Ardumoto  Pololu
 const int maxWheelLoad = 40;                // 40     85
 const int triggerWheelLoad = 6;            // 30     75
@@ -105,9 +109,8 @@ int rcRead(int channel){
   return pulseIn(rc_radio[channel-1][0], HIGH, 25000) / 10;
 }
 
-int getRcOffset(int this_channel){
-  int cur_read = rcRead(this_channel);
-  return cur_read;
+int getRcOffset(int val){
+  return val;
 //  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
 }
 
@@ -409,14 +412,14 @@ void printStatus()
 
 #ifdef __rc_radio__
     Serial.print(" RC1: ");
-    Serial.print(getRcOffset(1));
+    Serial.print(getRcOffset(rcCH1_val));
     Serial.print(" / ");
-    Serial.print(rcRead(1));
+    Serial.print(rcCH1_val);
 
     Serial.print(" RC2: ");
-    Serial.print(getRcOffset(2));
+    Serial.print(getRcOffset(rcCH2_val));
     Serial.print(" / ");
-    Serial.print(rcRead(2));
+    Serial.print(rcCH2_val);
 
 //    Serial.print(" RC3: ");
 //    Serial.print(getRcOffset(3));
@@ -577,6 +580,12 @@ void loop()
 {
   // done every loop
   batterySOC = getBatterySOC();
+
+#ifdef __rc_radio__
+  rcCH1_val = rcRead(1);
+  rcCH2_val = rcRead(2);
+//  rcCH3_val = rcRead(3);
+#endif
 
   switch (state) {
     case MOWING:
