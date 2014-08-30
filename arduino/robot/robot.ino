@@ -47,7 +47,7 @@ const int enableShield = shieldPin[shieldType][4];                  //  -1      
 
 const int rcCH1 = 7; // left/right, full left ca 940, 0 ca 1490 - 1498, full right ca 2000
 const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, full reverse 1159
-const int rcCH3 = 7; // AUX ON/OFF => ca <1000, ca >1990
+const int rcCH3 = -1; // AUX ON/OFF => ca <1000, ca >1990
 
 const int rc_radio[3][4] = { // pin, min, zero, max
                   {rcCH1,  1250, 1960, 2610},
@@ -410,15 +410,17 @@ void printStatus()
 #ifdef __rc_radio__
     Serial.print(" RC1: ");
     Serial.print(getRcOffset(1));
+    Serial.print(" / ");
+    Serial.print(rcRead(1));
+
     Serial.print(" RC2: ");
     Serial.print(getRcOffset(2));
+    Serial.print(" / ");
+    Serial.print(rcRead(2));
+
 //    Serial.print(" RC3: ");
 //    Serial.print(getRcOffset(3));
 
-    Serial.print(" RC1: ");
-    Serial.print(rcRead(1));
-    Serial.print(" RC2: ");
-    Serial.print(rcRead(2));
 //    Serial.print(" RC3: ");
 //    Serial.print(rcRead(3));
   
