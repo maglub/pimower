@@ -50,8 +50,8 @@ const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, f
 const int rcCH3 = -1; // AUX ON/OFF => ca <1000, ca >1990
 
 const int rc_radio[3][4] = { // pin, min, zero, max
-                  {rcCH1,  114, 190, 255},
-                  {rcCH2, 154, 195, 230},
+                  {rcCH1,  146, 146, 255},
+                  {rcCH2, 170, 170, 230},
                   {rcCH3,    0, 1000, 1990}
                  };
            
@@ -454,7 +454,7 @@ void printDebug(){
       Serial.print(mustCharge());
       
       Serial.print(" AccX: ");
-      Serial.print(getXacc());
+      Serial.print(getXacc()); 
       Serial.print(" AccY: ");
       Serial.print(getYacc());
       Serial.print(" AccZ: ");
