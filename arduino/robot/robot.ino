@@ -5,6 +5,8 @@
 //#define __FWD__           // Front Wheel Drive
 //#define __CutterCurrentSensing__  // Adjust speed through current sensing or voltage drop
 
+#include <stdio.h>
+
 #ifdef __brushlessCutter__
   #include <Servo.h>
   Servo cutter;
@@ -111,6 +113,14 @@ const float batterySOCFullyChargedLevel = 590;  // Voltage when the battery is f
 const int batterySOCTriggerAmount = 5;       // Number of checks below trigger level before returning to charge
 int batterySOC;
 
+
+
+void sprintFix4(int val){
+  
+  char tbs[16];
+  sprintf(tbs,"%4d", val);
+  Serial.print(tbs);
+}
 //=============================================
 // RC functions
 //=============================================
@@ -496,7 +506,8 @@ void printStatus()
 
 #ifdef __rc_radio__
     Serial.print(" RC1: ");
-    Serial.print(getRcOffset(1));
+    sprintFix4(getRcOffset(1));
+//    Serial.print(getRcOffset(1));
     Serial.print(" / ");
     Serial.print(rcCH_val[0]);
     Serial.print(" / ");
