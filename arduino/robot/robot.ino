@@ -636,7 +636,7 @@ void loop()
   
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
-        //state = BUMP;
+        state = BUMP;
       }   
       break; // end state MOWING
   
