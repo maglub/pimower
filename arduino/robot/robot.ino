@@ -49,7 +49,7 @@ const int rcCH1 = 7; // left/right, full left ca 940, 0 ca 1490 - 1498, full rig
 const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, full reverse 1159
 const int rcCH3 = -1; // AUX ON/OFF => ca <1000, ca >1990
 
-const int rc_radio[3][4] = { // pin, min, zero, max
+int rc_radio[3][4] = { // pin, min, zero, max
                   {rcCH1,  840, 1460, 2080},
                   {rcCH2, 1370, 1700, 2030},
                   {rcCH3,    0, 1000, 2030}
@@ -154,6 +154,24 @@ void rcAdjustSpeed(){
     setRightMotorSpeed(fullSpeed);
   }
 
+}
+
+void rcCalibrateZero(){
+  int channels = 2;
+  int samples = 5;
+  int sampleVal[3] = {0,0,0};
+  
+  for (int sample = 0 ; sample < samples ; sample++) {
+    for (int channel = 0 ; channel < channels ; channel++) {
+       sampleVal[channel] += rcRead(channel);      
+    }
+    delay(10);
+  }
+  
+  for (int channel = 0 ; channel < channels ; channel++) {
+    rc_radio[channel][2] = sampleVal[channel] / samples;
+  }
+  
 }
 //=============================================
 // stopCutter()
@@ -571,6 +589,8 @@ void setup()
   pinMode(rcCH1, INPUT); // Set our input pins as such
   pinMode(rcCH2, INPUT);
 //  pinMode(rcCH3, INPUT);
+
+  rcCalibrateZero();
 #endif
 
   //Initialize cutter motor
@@ -685,7 +705,7 @@ void loop()
       break;
  
     case DEBUG:
-      int Q;
+      //int Q;
       //stopCutter();
       //startCutter();
       //stopMower();
