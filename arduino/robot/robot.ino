@@ -171,8 +171,8 @@ void rcCalibrateZero(){
       Serial.print(sampleVal[channel]);
       Serial.print("/");
       Serial.print(cur_sample);
-      Serial.println();
     }
+    Serial.println();
     delay(100);
   }
   
