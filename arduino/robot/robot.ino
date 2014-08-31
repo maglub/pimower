@@ -101,6 +101,7 @@ int state;
 int counter = 0;
 
 int bumpCount = 0;
+const int bumpCount_threshold =5;
 
 // Battery                                  
 const float batterySOCChargingLevel = 550;   // Battery Voltage when it is time to charge
@@ -411,6 +412,8 @@ void printStatus()
   if ( verbosity == 1 ) {
     Serial.print ("#: ");
     Serial.print (counter);
+    Serial.print (" BC: ");
+    Serial.print (bumpCount);
     Serial.print (" LC: ");
     Serial.print (getLeftMotorCurrent());
     Serial.print (" RC: ");
@@ -652,7 +655,7 @@ void loop()
         
         bumpCount++;
         
-        if (bumpCount >= 3 ) { bumpCount = 0; state = BUMP; }
+        if (bumpCount >= bumpCount_threshold ) { bumpCount = 0; state = BUMP; }
       }   
       break; // end state MOWING
   
