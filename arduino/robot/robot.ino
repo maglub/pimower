@@ -132,11 +132,13 @@ void rcAdjustSpeed(){
  
   int rcOffset = getRcOffset(1);
 
+  // steer left
   if (rcOffset < -20) {
     setLeftMotorSpeed(fullSpeed + rcOffset);
     setRightMotorSpeed(fullSpeed);
   }
 
+  // steer right
   if (rcOffset > 20) {
     setLeftMotorSpeed(fullSpeed);
     setRightMotorSpeed(fullSpeed - rcOffset);
@@ -233,7 +235,7 @@ void setLeftMotorSpeed(int val){
   if (leftMotorSpeed > 255) { leftMotorSpeed = 255; }
   if (leftMotorSpeed < -255) { leftMotorSpeed = -255; }
   
-  analogWrite(motorLeftPWM, abs(val));
+  analogWrite(motorLeftPWM, abs(leftMotorSpeed));
   setLeftMotorDirection(val>0);
 }
 
@@ -241,7 +243,7 @@ void setRightMotorSpeed(int val){
   rightMotorSpeed = val;
   if (rightMotorSpeed > 255) { rightMotorSpeed = 255; }
   if (rightMotorSpeed < -255) { rightMotorSpeed = -255; }
-  analogWrite(motorRightPWM, abs(val));
+  analogWrite(motorRightPWM, abs(rightMotorSpeed));
   setRightMotorDirection(val>0);
 }
 
