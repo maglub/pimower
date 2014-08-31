@@ -164,17 +164,23 @@ void rcCalibrateZero(){
   for (int sample = 0 ; sample < samples ; sample++) {
     for (int channel = 0 ; channel < channels ; channel++) {
        sampleVal[channel] += rcRead(channel);      
+       Serial.print("  - Sample RC");
+       Serial.print(channel + 1);
+       Serial.print(": ");
+       Serial.print(sampleVal[channel]);
+       Serial.println();
     }
     delay(10);
   }
   
   for (int channel = 0 ; channel < channels ; channel++) {
     rc_radio[channel][2] = sampleVal[channel] / samples;
-    Serial.print("  - RC1");
+    Serial.print("  - RC");
     Serial.print(channel + 1);
     Serial.print(": ");
     Serial.print(rc_radio[channel][2]);    
   }
+  Serial.println();
   
 }
 //=============================================
