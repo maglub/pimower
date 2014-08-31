@@ -643,7 +643,7 @@ void setup()
 
 
   Serial.println("* Calibrating RC Zero state");
-  //rcCalibrateZero();
+  rcCalibrateZero();
   Serial.println("  - Done!");
 #endif
 
