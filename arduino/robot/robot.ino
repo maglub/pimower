@@ -115,11 +115,12 @@ int rcRead(int channel){
 
 int getRcOffset(int channel){
   int retVal = map(rcCH_val[channel-1], rc_radio[channel-1][1], rc_radio[channel-1][3], rcCH_span[channel-1][0], rcCH_span[channel-1][1]);
-  if (retVal > 255) {
-    retVal = 255;
+
+  if (retVal < rcCH_span[channel-1][0]) {
+    retVal = rcCH_span[channel-1][0];
   }
-  if (retVal < -255) {
-    retVal = -255;
+  if (retVal > rcCH_span[channel-1][1]) {
+    retVal = rcCH_span[channel-1][1];
   }
   
   return retVal;
