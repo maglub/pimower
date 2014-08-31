@@ -170,6 +170,10 @@ void rcCalibrateZero(){
   
   for (int channel = 0 ; channel < channels ; channel++) {
     rc_radio[channel][2] = sampleVal[channel] / samples;
+    Serial.print("  - RC1");
+    Serial.print(channel + 1);
+    Serial.print(": ");
+    Serial.print(rc_radio[channel][2]);    
   }
   
 }
