@@ -118,7 +118,7 @@ int batterySOC;
 void sprintFix4(int val){
   
   char tbs[16];
-  sprintf(tbs,"%4d", val);
+  sprintf(tbs,"%5d", val);
   Serial.print(tbs);
 }
 //=============================================
@@ -509,16 +509,21 @@ void printStatus()
     sprintFix4(getRcOffset(1));
 //    Serial.print(getRcOffset(1));
     Serial.print(" / ");
-    Serial.print(rcCH_val[0]);
+    sprintFix4(rcCH_val[0]);
+//    Serial.print(rcCH_val[0]);
     Serial.print(" / ");
-    Serial.print(rc_radio[0][2]);
+    sprintFix4(rc_radio[0][2]);
+//    Serial.print(rc_radio[0][2]);
 
     Serial.print(" RC2: ");
-    Serial.print(getRcOffset(2));
+    sprintFix4(getRcOffset(2));
+//    Serial.print(getRcOffset(2));
     Serial.print(" / ");
-    Serial.print(rcCH_val[1]);
+    sprintFix4(rcCH_val[1]);
+//    Serial.print(rcCH_val[1]);
     Serial.print(" / ");
-    Serial.print(rc_radio[1][2]);
+    sprintFix4(rc_radio[1][2]);
+//    Serial.print(rc_radio[1][2]);
 
 //    Serial.print(" RC3: ");
 //    Serial.print(getRcOffset(3));
