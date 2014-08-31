@@ -57,6 +57,11 @@ const int rc_radio[3][4] = { // pin, min, zero, max
            
            
 int rcCH_val[3] = {0,0,0};      
+int rcCH_span[3][2] = {
+                        { -25,25 },
+                        { -25,25 },
+                        { -25,25 }
+                      };
 
 // Maximum allowed wheel motor current        Ardumoto  Pololu
 const int maxWheelLoad = 40;                // 40     85
@@ -109,7 +114,7 @@ int rcRead(int channel){
 }
 
 int getRcOffset(int channel){
-  int retVal = map(rcCH_val[channel-1], rc_radio[channel-1][1], rc_radio[channel-1][3], -255, 255);
+  int retVal = map(rcCH_val[channel-1], rc_radio[channel-1][1], rc_radio[channel-1][3], rcCH_span[channel-1][0], rcCH_span[channel-1][1]);
   if (retVal > 255) {
     retVal = 255;
   }
@@ -598,6 +603,9 @@ void loop()
   switch (state) {
     case MOWING:
 
+      // RC Controller
+      
+//      if ( rcHC_val[0]
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
         state = BUMP;
