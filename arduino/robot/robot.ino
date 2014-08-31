@@ -186,6 +186,8 @@ void rcCalibrateZero(){
   Serial.println();
   
 }
+
+
 //=============================================
 // stopCutter()
 //=============================================
@@ -494,11 +496,15 @@ void printStatus()
     Serial.print(getRcOffset(1));
     Serial.print(" / ");
     Serial.print(rcCH_val[0]);
+    Serial.print(" / ");
+    Serial.print(rc_radio[0][2]);
 
     Serial.print(" RC2: ");
     Serial.print(getRcOffset(2));
     Serial.print(" / ");
     Serial.print(rcCH_val[1]);
+    Serial.print(" / ");
+    Serial.print(rc_radio[1][2]);
 
 //    Serial.print(" RC3: ");
 //    Serial.print(getRcOffset(3));
