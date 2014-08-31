@@ -626,6 +626,9 @@ void loop()
   rcCH_val[0] = rcRead(1);
   rcCH_val[1] = rcRead(2);
 //  rcCH3_val = rcRead(3);
+
+
+    // use throttel to start and stop
      if (getRcOffset(2) > 15 && state != MOWING) {
        state = MOWING;
      }
@@ -651,6 +654,13 @@ void loop()
     case BUMP:
         stopCutter();
         Serial.println("* Motor current threshold reached");
+        Serial.print("  - ");
+        Serial.print (" LC: ");
+        Serial.print (getLeftMotorCurrent());
+        Serial.print (" RC: ");
+        Serial.print (getRightMotorCurrent());
+        Serial.println();
+
         backUpWithTwist(1500);
         slowStart();
         //startCutter();
