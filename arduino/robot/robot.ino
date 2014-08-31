@@ -100,6 +100,8 @@ int cutterSpeed = 150;
 int state;
 int counter = 0;
 
+int bumpCount = 0;
+
 // Battery                                  
 const float batterySOCChargingLevel = 550;   // Battery Voltage when it is time to charge
 const float batterySOCFullyChargedLevel = 590;  // Voltage when the battery is fully charged
@@ -647,7 +649,10 @@ void loop()
   
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
-        state = BUMP;
+        
+        bumpCount++;
+        
+        if (bumpCount >= 3 ) { bumpCount = 0; state = BUMP; }
       }   
       break; // end state MOWING
   
