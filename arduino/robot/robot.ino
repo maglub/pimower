@@ -626,6 +626,14 @@ void loop()
   rcCH_val[0] = rcRead(1);
   rcCH_val[1] = rcRead(2);
 //  rcCH3_val = rcRead(3);
+     if (getRcOffset(2) > 15 && state != MOWING) {
+       state = MOWING;
+     }
+     
+     if (getRcOffset(2) < -15 && state == MOWING) {
+       state = STOP;
+     } 
+     
 #endif
 
   switch (state) {
