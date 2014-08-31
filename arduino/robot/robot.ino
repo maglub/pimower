@@ -65,7 +65,7 @@ int rcCH_span[3][2] = {
 
 // Maximum allowed wheel motor current        Ardumoto  Pololu
 const int maxWheelLoad = 40;                // 40     85
-const int triggerWheelLoad = 5;            // 30     75
+const int triggerWheelLoad = 4;            // 30     75
 
 
 // Cutter states
