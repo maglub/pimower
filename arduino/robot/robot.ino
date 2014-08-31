@@ -88,8 +88,10 @@ const int LEFT = 10;
 const int RIGHT = 11;
 const int BUMP = 12;
 
-int leftMotorSpeed = 0;
-int rightMotorSpeed = 0;
+int leftMotorSpeed    = 0;
+int rightMotorSpeed   = 0;
+int leftMotorCurrent  = 0;
+int rightMotorCurrent = 0;
 
 const int fullSpeed = 255;
 const int reducedSpeed = 150;
@@ -415,9 +417,9 @@ void printStatus()
     Serial.print (" BC: ");
     Serial.print (bumpCount);
     Serial.print (" LC: ");
-    Serial.print (getLeftMotorCurrent());
+    Serial.print (leftMotorCurrent);
     Serial.print (" RC: ");
-    Serial.print (getRightMotorCurrent());
+    Serial.print (rightMotorCurrent);
     Serial.print (" LMotorSp: ");
     Serial.print (getLeftMotorSpeed());
     Serial.print (" RMotorSp: ");
@@ -489,9 +491,9 @@ void printDebug(){
       Serial.print ("Counter: ");
       Serial.print (counter);
       Serial.print(" LMot: ");
-      Serial.print(getLeftMotorCurrent());
+      Serial.print(leftMotorCurrent);
       Serial.print(" RMot: ");
-      Serial.print(getRightMotorCurrent());
+      Serial.print(rightMotorCurrent);
   /*
       Serial.print(" SOC: ");
       Serial.print(getBatterySOC());
@@ -626,7 +628,8 @@ void loop()
 {
   // done every loop
   batterySOC = getBatterySOC();
-
+  leftMotorCurrent = getLeftMotorCurrent();
+  rightMotorCurrent = getRightMotorCurrent();
 #ifdef __rc_radio__
   rcCH_val[0] = rcRead(1);
   rcCH_val[1] = rcRead(2);
@@ -651,7 +654,7 @@ void loop()
       rcAdjustSpeed();    
   
       // Hit something
-      if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
+      if ( debug == 0 && (leftMotorCurrent > triggerWheelLoad || rightMotorCurrent > triggerWheelLoad)) {
         bumpCount++;
         if (bumpCount >= bumpCount_threshold ) { bumpCount = 0; state = BUMP; }
       } else {
