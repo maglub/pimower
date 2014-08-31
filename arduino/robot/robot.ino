@@ -136,7 +136,7 @@ void rcAdjustSpeed(){
     setRightMotorSpeed(fullSpeed);
   }
 
-  if (rcCH_val[0] > 20) {
+  if (rcOffset > 20) {
     setLeftMotorSpeed(fullSpeed);
     setRightMotorSpeed(fullSpeed - rcOffset);
   }
