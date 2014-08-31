@@ -58,7 +58,7 @@ const int rc_radio[3][4] = { // pin, min, zero, max
            
 int rcCH_val[3] = {0,0,0};      
 int rcCH_span[3][2] = {
-                        { -255,255 },
+                        { -512,512 },
                         { -25,25 },
                         { -25,25 }
                       };
@@ -224,12 +224,17 @@ void setRightMotorDirection(boolean fwd){
 
 void setLeftMotorSpeed(int val){
   leftMotorSpeed = val;
+  if (leftMotorSpeed > 255) { leftMotorSpeed = 255; }
+  if (leftMotorSpeed < -255) { leftMotorSpeed = -255; }
+  
   analogWrite(motorLeftPWM, abs(val));
   setLeftMotorDirection(val>0);
 }
 
 void setRightMotorSpeed(int val){
   rightMotorSpeed = val;
+  if (rightMotorSpeed > 255) { rightMotorSpeed = 255; }
+  if (rightMotorSpeed < -255) { rightMotorSpeed = -255; }
   analogWrite(motorRightPWM, abs(val));
   setRightMotorDirection(val>0);
 }
