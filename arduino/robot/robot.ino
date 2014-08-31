@@ -50,8 +50,8 @@ const int rcCH2 = 4; // forward/backwards, full gas ca 2040, 0 ca 1495 - 1505, f
 const int rcCH3 = -1; // AUX ON/OFF => ca <1000, ca >1990
 
 int rc_radio[3][4] = { // pin, min, zero, max
-                  {rcCH1,  840, 1460, 2080},
-                  {rcCH2, 1370, 1700, 2030},
+                  {rcCH1,  -600, 1460, 600},
+                  {rcCH2, -350, 1700, 350},
                   {rcCH3,    0, 1000, 2030}
                  };
            
@@ -178,6 +178,9 @@ void rcCalibrateZero(){
   
   for (int channel = 0 ; channel < channels ; channel++) {
     rc_radio[channel][2] = sampleVal[channel] / samples;
+    rc_radio[channel][1] += rc_radio[channel][2];
+    rc_radio[channel][3] += rc_radio[channel][2];
+    
     Serial.print("  - RC");
     Serial.print(channel + 1);
     Serial.print(": ");
