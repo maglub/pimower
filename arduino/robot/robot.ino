@@ -58,7 +58,7 @@ const int rc_radio[3][4] = { // pin, min, zero, max
            
 int rcCH_val[3] = {0,0,0};      
 int rcCH_span[3][2] = {
-                        { -25,25 },
+                        { -255,255 },
                         { -25,25 },
                         { -25,25 }
                       };
