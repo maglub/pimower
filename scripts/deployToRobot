@@ -27,5 +27,5 @@ ssh -t $remoteUser@$remoteHost "cd $remoteDir ; git pull ; /usr/bin/avrdude -q -
 }
 
 
-runLocal  | awk -v HOST="local " '{print HOST, ":", $0}'
-runRemote | awk -v HOST="remote" '{print HOST, ":", $0}'
+runLocal  2>&1 | awk -v HOST="local " '{print HOST, ":", $0}'
+runRemote 2>&1 | awk -v HOST="remote" '{print HOST, ":", $0}'
