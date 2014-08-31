@@ -652,11 +652,12 @@ void loop()
   
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
-        
         bumpCount++;
-        
         if (bumpCount >= bumpCount_threshold ) { bumpCount = 0; state = BUMP; }
-      }   
+      } else {
+        bumpCount = 0;
+      }
+      
       break; // end state MOWING
   
     case BUMP:
