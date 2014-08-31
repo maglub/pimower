@@ -590,7 +590,7 @@ void setup()
   pinMode(rcCH2, INPUT);
 //  pinMode(rcCH3, INPUT);
 
-  rcCalibrateZero();
+  //rcCalibrateZero();
 #endif
 
   //Initialize cutter motor
