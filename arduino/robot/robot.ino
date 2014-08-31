@@ -585,13 +585,6 @@ void setup()
   pinMode(motorLeftPWM, OUTPUT);
   pinMode(motorRightPWM, OUTPUT);
 
-#ifdef __rc_radio_
-  pinMode(rcCH1, INPUT); // Set our input pins as such
-  pinMode(rcCH2, INPUT);
-//  pinMode(rcCH3, INPUT);
-
-  //rcCalibrateZero();
-#endif
 
   //Initialize cutter motor
 
@@ -635,6 +628,21 @@ void setup()
 
   digitalWrite(motorLeftDirection, LOW);  //Set motor direction, 1 low, 2 high
   digitalWrite(motorRightDirection, LOW);  //Set motor direction, 3 high, 4 low
+
+
+#ifdef __rc_radio_
+  Serial.println("* Setting up RC receiver");
+  pinMode(rcCH1, INPUT); // Set our input pins as such
+  pinMode(rcCH2, INPUT);
+//  pinMode(rcCH3, INPUT);
+  Serial.println("  - Done!");
+
+
+  Serial.println("* Calibrating RC Zero state");
+  //rcCalibrateZero();
+  Serial.println("  - Done!");
+#endif
+
 
 }
 
