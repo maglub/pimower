@@ -127,6 +127,19 @@ int getRcOffset(int channel){
 //  return ((cur_read - rc_radio[channel-1][2])*512/rc_radio[channel-1][3]-rc_radio[channel-1][1]);
 }
 
+void rcAdjustSpeed(){
+ 
+  if (rcCH_val[0] < -20) {
+    setLeftMotorSpeed(fullSpeed + rcCH_val[0]);
+    setRightMotorSpeed(fullSpeed);
+  }
+
+  if (rcCH_val[0] > 20) {
+    setLeftMotorSpeed(fullSpeed);
+    setRightMotorSpeed(fullSpeed - rcCH_val[0]);
+  }
+
+}
 //=============================================
 // stopCutter()
 //=============================================
@@ -604,8 +617,8 @@ void loop()
     case MOWING:
 
       // RC Controller
-      
-//      if ( rcHC_val[0]
+      rcAdjustSpeed();    
+  
       // Hit something
       if ( debug == 0 && (getLeftMotorCurrent() > triggerWheelLoad || getRightMotorCurrent() > triggerWheelLoad)) {
         state = BUMP;
