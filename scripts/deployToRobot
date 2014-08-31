@@ -9,14 +9,23 @@ remoteDir=pirobot
 buildPath=$HOME/Documents/Arduino/build
 hexFile=$buildPath/robot.cpp.hex
 
+
+runLocal(){
+#--- on this host
 cd $this_dir/../arduino/robot
 cp $hexFile $this_dir/../hex
 git add $this_dir/../arduino/robot/robot.ino
 git add $this_dir/../hex/$(basename $hexFile)
 git commit -m "minor changes"
 git push
+}
 
+runRemote(){
 #--- pull and make on remote host
-
 #ssh -t $remoteUser@$remoteHost "cd $remoteDir ; git pull ; make upload"
 ssh -t $remoteUser@$remoteHost "cd $remoteDir ; git pull ; /usr/bin/avrdude -q -V -p atmega2560 -C /etc/avrdude.conf -c stk500v2 -b 115200 -P /dev/ttyACM0  -U flash:w:hex/robot.cpp.hex:i"
+}
+
+
+runLocal  | awk -v HOST="local " '{print HOST, ":", $0}'
+runRemote | awk -v HOST="remote" '{print HOST, ":", $0}'
