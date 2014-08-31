@@ -142,6 +142,11 @@ void rcAdjustSpeed(){
     setRightMotorSpeed(fullSpeed - rcOffset);
   }
 
+  if (rcOffset > -20 && rcOffset < 20) {
+    setLeftMotorSpeed(fullSpeed);
+    setRightMotorSpeed(fullSpeed);
+  }
+
 }
 //=============================================
 // stopCutter()
