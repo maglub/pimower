@@ -163,7 +163,7 @@ void rcCalibrateZero(){
   
   for (int sample = 0 ; sample < samples ; sample++) {
     for (int channel = 0 ; channel < channels ; channel++) {
-       sampleVal[channel] += rcRead(channel);      
+       sampleVal[channel] += rcRead(channel+1);      
        Serial.print("  - Sample RC");
        Serial.print(channel + 1);
        Serial.print(": ");
