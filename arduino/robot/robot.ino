@@ -630,7 +630,7 @@ void setup()
   digitalWrite(motorRightDirection, LOW);  //Set motor direction, 3 high, 4 low
 
 
-#ifdef __rc_radio_
+#ifdef __rc_radio__
   Serial.println("* Setting up RC receiver");
   pinMode(rcCH1, INPUT); // Set our input pins as such
   pinMode(rcCH2, INPUT);
